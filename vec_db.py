@@ -198,9 +198,8 @@ class VecDB:
         for i in range(10):
             X_i = X[:, i * 7 : (i + 1) * 7]  # (n_queries, ds)
             centers = center[i]  # (k, ds)
-            distance_table[:, i, :] = euclidean_distances(
-                X_i, centers, squared=True
-            )
+            #distance_table[:, i, :] = euclidean_distances(X_i, centers, squared=True)
+            distance_table[:, i, :] = np.sqrt(np.sum(np.square(euclidean_distances(X_i, centers)), axis=-1))
         del center, centers
         codes=np.load(self.file_path+'/codes.npy').astype(np.uint16)
         n_codes = len(codes)
